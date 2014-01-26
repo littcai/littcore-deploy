@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<host-config>
+	<host>
+		<ip>172.16.3.80</ip>	
+		<port>22</port>
+		<username>root</username>
+		<password>root</password>
+		<prompt>#</prompt>
+	</host>
+</host-config>

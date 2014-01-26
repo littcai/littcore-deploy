@@ -1,0 +1,70 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+	<id>bin</id>
+	<formats>
+		<format>zip</format>
+		<format>tar.gz</format>
+	</formats>
+	<dependencySets>
+		<dependencySet>
+			<useProjectArtifact>false</useProjectArtifact>
+			<outputDirectory>lib</outputDirectory>
+		</dependencySet>
+	</dependencySets>
+	<fileSets>		
+		<fileSet>
+			<directory>${project.build.directory}</directory>
+			<outputDirectory>bin</outputDirectory>
+			<includes>
+				<include>${project.build.finalName}.jar</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>src/main/resources</directory>
+			<outputDirectory>bin</outputDirectory>
+			<filtered>true</filtered>		
+			<includes>
+				<include>*.txt</include>
+			</includes>
+		</fileSet>	
+		<fileSet>
+			<directory>src/main/config</directory>
+			<outputDirectory>conf</outputDirectory>
+			<filtered>true</filtered>		
+			<includes>
+				<include>*.*</include>
+			</includes>
+		</fileSet>				
+		<fileSet>
+			<directory>src/main/scripts</directory>
+			<outputDirectory>bin</outputDirectory>	
+			<filtered>true</filtered>			
+			<includes>
+				<include>*.sh</include>
+				<include>*.bat</include>
+			</includes>
+		</fileSet>
+		<!-- environment files will cover resources.  -->	
+		<fileSet>
+			<directory>src/main/resources/environment/${package.environment}</directory>
+			<outputDirectory>conf</outputDirectory>			
+			<includes>				
+				<include>*.*</include>				
+			</includes>
+		</fileSet>
+		<!-- main files will be ignored by environment-->	 
+		<!-- if you use filtered property, files will be encoded by pom's setting.
+			So files which don't need to encoding should be defined seperated.
+		 -->
+		<fileSet>
+			<directory>src/main/resources</directory>
+			<outputDirectory>conf</outputDirectory>
+			<!-- filter will replace symbols in the file.
+				<filtered>true</filtered>
+			 -->
+			<includes>			
+				<include>*.*</include>					
+			</includes>
+		</fileSet>			
+	</fileSets>	
+</assembly>

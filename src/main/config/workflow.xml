@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow>
+	<process name="upload-software">	<!-- 流程层 -->
+		<upload type="SCP">	<!-- step: action -->
+			<file>
+				<local-path>/software/jdk-6u27-linux-x64.bin</local-path>
+				<remote-path>/usr/local/trannms/install/software</remote-path>
+			</file>
+			<file>
+				<local-path>/software/MySQL-server-5.5.29-2.el6.x86_64.rpm</local-path>
+				<remote-path>/usr/local/trannms/install/software</remote-path>
+			</file>
+			<file>
+				<local-path>/scripts</local-path>
+				<remote-path>/usr/local/trannms/install/scripts</remote-path>
+			</file>
+		</upload>
+		<chmod mode="777">
+			<file>*.sh</file>
+		</chmod>
+	</process>
+	<process name="install-software">
+		<shell name="install jdk">
+			<script>install-jdk.sh</script>			
+		</shell>
+		<shell name="install mysql">
+			<script>install-mysql.sh</script>			
+		</shell>		
+	</process>
+	<process name="conf-software">
+		<shell name="conf mysql">
+			<script>conf-mysql.sh</script>
+		</shell>	
+		<shell name="conf env">
+			<script>conf-env.sh</script>
+		</shell>
+		<shell name="conf startup">
+			<script>conf-startup.sh</script>
+		</shell>	
+	</process>
+	<process name="install-application">
+		<shell name="install app">
+			<script>install-trannms.sh</script>			
+		</shell>
+	</process>	
+	<process name="conf-application">
+		<shell name="conf trannms">
+			<script>conf-trannms.sh</script>
+		</shell>	
+		<db-upgrade>
+			<jdbc-driver></jdbc-driver>
+			<jdbc-url></jdbc-url>
+			<jdbc-username></jdbc-username>
+			<jdbc-password></jdbc-password>
+		</db-upgrade>
+	</process>
+	<process name="start-application">
+		<shell name="start trannms">
+			<script>conf-trannms.sh</script>
+		</shell>	
+	</process>			
+</workflow>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d - %c - [%t] %-5p - %m%n" />
+		</layout>		
+	</appender>
+	
+	<appender name="FILE_DEBUG"
+		class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="d:/trannmsData/logs/log_debug.log" />
+		<param name="Append" value="false" />
+		<param name="MaxFileSize" value="102400KB"/>      
+     	<param name="MaxBackupIndex" value="10"/> 
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d - %c - [%t] %-5p - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMin" value="DEBUG" />
+			<param name="levelMax" value="DEBUG" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+	</appender>
+	
+	<appender name="FILE_ERROR"
+		class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="d:/trannmsData/logs/log_error.log" />
+		<param name="Append" value="false" />
+		<param name="MaxFileSize" value="102400KB"/>      
+     	<param name="MaxBackupIndex" value="10"/> 
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d - %c - [%t] %-5p - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMin" value="WARN" />
+			<param name="levelMax" value="ERROR" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+	</appender>
+	
+	<appender name="FILE_log"
+		class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="d:/trannmsData/logs/log_log.log" />
+		<param name="Append" value="false" />
+		<param name="MaxFileSize" value="102400KB"/>      
+     	<param name="MaxBackupIndex" value="10"/> 
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d - %c - [%t] %-5p - %m%n" />
+		</layout>
+	</appender>
+	
+	<!-- Perf4J appenders -->
+    <!--
+       This AsyncCoalescingStatisticsAppender groups StopWatch log messages
+       into GroupedTimingStatistics messages which it sends on the
+       file appender defined below
+    -->
+    <appender name="CoalescingStatistics"
+              class="org.perf4j.log4j.AsyncCoalescingStatisticsAppender">
+        <!--
+          The TimeSlice option is used to determine the time window for which
+          all received StopWatch logs are aggregated to create a single
+          GroupedTimingStatistics log. Here we set it to 10 seconds, overriding
+          the default of 30000 ms
+        -->
+        <param name="TimeSlice" value="30000"/>
+        <appender-ref ref="fileAppender"/>
+    </appender>
+
+    <!-- This file appender is used to output aggregated performance statistics -->
+    <appender name="fileAppender" class="org.apache.log4j.FileAppender">
+        <param name="File" value="d:/trannmsData/logs/perfStats.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%m%n"/>
+        </layout>
+    </appender>
+	
+	<category name="com.litt.core">
+		<level value="DEBUG" />
+	</category>
+	
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="STDOUT" />	
+	</root>
+	
+</log4j:configuration>
